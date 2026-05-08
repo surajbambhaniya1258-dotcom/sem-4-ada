@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+public class MakingChange {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of coin types: ");
+        int n = sc.nextInt();
+
+        int coins[] = new int[n];
+
+        System.out.println("Enter coin values:");
+        for (int i = 0; i < n; i++) {
+            coins[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter amount to make change: ");
+        int amount = sc.nextInt();
+
+        int dp[][] = new int[n + 1][amount + 1];
+
+        // Initialization
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = 0;
+        }
+
+        for (int j = 1; j <= amount; j++) {
+            dp[0][j] = 999; // infinity
+        }
+
+        // DP computation
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= amount; j++) {
+
+                if (coins[i - 1] > j) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j],
+                            1 + dp[i][j - coins[i - 1]]);
+                }
+            }
+        }
+
+        // Result
+        if (dp[n][amount] == 999) {
+            System.out.println("Change not possible");
+        } else {
+            System.out.println("Minimum coins required: " + dp[n][amount]);
+        }
+
+        sc.close();
+    }
+}

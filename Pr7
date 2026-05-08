@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+public class PrimAlgo {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of vertices: ");
+        int num = sc.nextInt();
+
+        int matrix[][] = new int[num][num];
+        int visited[] = new int[num];
+
+        System.out.println("Enter adjacency matrix:");
+        for (int i = 0; i < num; i++) {
+            for (int j = 0; j < num; j++) {
+                matrix[i][j] = sc.nextInt();
+            }
+            visited[i] = 0;
+        }
+
+        int count = 0;
+        visited[0] = 1; // start from vertex 0
+
+        int u = 0, v = 0;
+        int min;
+        int total = 0;
+
+        System.out.println("Edges in MST:");
+
+        while (count < num - 1) {
+            min = 999;
+
+            for (int i = 0; i < num; i++) {
+                if (visited[i] == 1) {
+                    for (int j = 0; j < num; j++) {
+                        if (visited[j] == 0 && matrix[i][j] < min && matrix[i][j] != 0) {
+                            min = matrix[i][j];
+                            u = i;
+                            v = j;
+                        }
+                    }
+                }
+            }
+
+            System.out.println(u + " - " + v + " : " + min);
+
+            visited[v] = 1;
+            total += min;
+            count++;
+        }
+
+        System.out.println("Total cost = " + total);
+
+        sc.close();
+    }
+}

@@ -21,7 +21,7 @@ public class PrimAlgo {
         }
 
         int count = 0;
-        visited[0] = 1; // start from vertex 0
+        visited[0] = 1; 
 
         int u = 0, v = 0;
         int min;

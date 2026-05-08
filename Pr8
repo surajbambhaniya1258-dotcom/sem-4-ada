@@ -11,8 +11,6 @@ public class Kruskal {
 
         int matrix[][] = new int[num][num];
         int parent[] = new int[num];
-
-        // Initialize parent (disjoint set)
         for (int i = 0; i < num; i++) {
             parent[i] = i;
         }
@@ -32,8 +30,6 @@ public class Kruskal {
         while (count < num - 1) {
             int min = 999;
             int u = -1, v = -1;
-
-            // Find minimum edge
             for (int i = 0; i < num; i++) {
                 for (int j = 0; j < num; j++) {
                     if (matrix[i][j] < min && matrix[i][j] != 0) {
@@ -44,11 +40,8 @@ public class Kruskal {
                 }
             }
 
-            // Find root (simple find)
             int ru = find(parent, u);
             int rv = find(parent, v);
-
-            // If no cycle
             if (ru != rv) {
                 System.out.println(u + " - " + v + " : " + min);
                 total += min;
@@ -56,7 +49,6 @@ public class Kruskal {
                 count++;
             }
 
-            // Mark edge as used
             matrix[u][v] = matrix[v][u] = 999;
         }
 
@@ -65,15 +57,12 @@ public class Kruskal {
         sc.close();
     }
 
-    // Find function
     static int find(int parent[], int i) {
         while (parent[i] != i) {
             i = parent[i];
         }
         return i;
     }
-
-    // Union function
     static void union(int parent[], int i, int j) {
         parent[j] = i;
     }

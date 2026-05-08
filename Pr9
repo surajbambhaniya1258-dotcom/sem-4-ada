@@ -21,7 +21,7 @@ public class MakingChange {
 
         int dp[][] = new int[n + 1][amount + 1];
 
-        // Initialization
+
         for (int i = 0; i <= n; i++) {
             dp[i][0] = 0;
         }
@@ -30,7 +30,7 @@ public class MakingChange {
             dp[0][j] = 999; // infinity
         }
 
-        // DP computation
+   
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= amount; j++) {
 
@@ -42,8 +42,6 @@ public class MakingChange {
                 }
             }
         }
-
-        // Result
         if (dp[n][amount] == 999) {
             System.out.println("Change not possible");
         } else {

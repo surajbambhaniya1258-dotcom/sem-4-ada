@@ -1,0 +1,80 @@
+import java.util.Scanner;
+
+public class Kruskal {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of vertices: ");
+        int num = sc.nextInt();
+
+        int matrix[][] = new int[num][num];
+        int parent[] = new int[num];
+
+        // Initialize parent (disjoint set)
+        for (int i = 0; i < num; i++) {
+            parent[i] = i;
+        }
+
+        System.out.println("Enter adjacency matrix:");
+        for (int i = 0; i < num; i++) {
+            for (int j = 0; j < num; j++) {
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+
+        int count = 0;
+        int total = 0;
+
+        System.out.println("Edges in MST:");
+
+        while (count < num - 1) {
+            int min = 999;
+            int u = -1, v = -1;
+
+            // Find minimum edge
+            for (int i = 0; i < num; i++) {
+                for (int j = 0; j < num; j++) {
+                    if (matrix[i][j] < min && matrix[i][j] != 0) {
+                        min = matrix[i][j];
+                        u = i;
+                        v = j;
+                    }
+                }
+            }
+
+            // Find root (simple find)
+            int ru = find(parent, u);
+            int rv = find(parent, v);
+
+            // If no cycle
+            if (ru != rv) {
+                System.out.println(u + " - " + v + " : " + min);
+                total += min;
+                union(parent, ru, rv);
+                count++;
+            }
+
+            // Mark edge as used
+            matrix[u][v] = matrix[v][u] = 999;
+        }
+
+        System.out.println("Total cost = " + total);
+
+        sc.close();
+    }
+
+    // Find function
+    static int find(int parent[], int i) {
+        while (parent[i] != i) {
+            i = parent[i];
+        }
+        return i;
+    }
+
+    // Union function
+    static void union(int parent[], int i, int j) {
+        parent[j] = i;
+    }
+}

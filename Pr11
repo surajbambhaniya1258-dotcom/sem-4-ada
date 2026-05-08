@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class MatrixChain {
 
-    // Function to print optimal parenthesization
     static void printOptimal(int s[][], int i, int j) {
         if (i == j) {
             System.out.print("A" + i);
@@ -31,12 +30,10 @@ public class MatrixChain {
         int m[][] = new int[n + 1][n + 1];
         int s[][] = new int[n + 1][n + 1];
 
-        // Initialize diagonal
         for (int i = 1; i <= n; i++) {
             m[i][i] = 0;
         }
 
-        // Chain length
         for (int L = 2; L <= n; L++) {
             for (int i = 1; i <= n - L + 1; i++) {
                 int j = i + L - 1;

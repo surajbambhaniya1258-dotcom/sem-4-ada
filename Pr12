@@ -4,7 +4,6 @@ public class LCS {
 
     static int c[][];
 
-    // Function to build LCS table
     public static void findLCS(String x, String y) {
         int m = x.length();
         int n = y.length();
@@ -28,8 +27,6 @@ public class LCS {
             }
         }
     }
-
-    // Function to print LCS
     public static void printLCS(String x, String y, int i, int j) {
         if (i == 0 || j == 0)
             return;
@@ -42,9 +39,7 @@ public class LCS {
         } else {
             printLCS(x, y, i, j - 1);
         }
-    }
-
-    // Print DP table
+   }
     public static void printTable(String x, String y) {
         System.out.println("\nLCS Table:");
         for (int i = 0; i <= x.length(); i++) {

@@ -9,13 +9,9 @@ public class BubbleSort {
         int num = sc.nextInt();
 
         int arr[] = new int[num];
-
-        // Generate random elements (0–99)
         for (int i = 0; i < num; i++) {
             arr[i] = (int) (Math.random() * 100);
         }
-
-        // Print original array
         System.out.println("Original array:");
         for (int i = 0; i < num; i++) {
             System.out.print(arr[i] + " ");
@@ -23,12 +19,10 @@ public class BubbleSort {
         System.out.println();
 
         long T1 = System.nanoTime();
-
-        // Bubble Sort
         for (int i = 0; i < num - 1; i++) {
             for (int j = 0; j < num - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
-                    // Swap
+                  
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -38,7 +32,6 @@ public class BubbleSort {
 
         long T2 = System.nanoTime();
 
-        // Sorted array
         System.out.println("Sorted array:");
         for (int k = 0; k < num; k++) {
             System.out.print(arr[k] + " ");

@@ -1,0 +1,78 @@
+import java.util.Scanner;
+
+public class LCS {
+
+    static int c[][];
+
+    // Function to build LCS table
+    public static void findLCS(String x, String y) {
+        int m = x.length();
+        int n = y.length();
+
+        c = new int[m + 1][n + 1];
+
+        for (int i = 0; i <= m; i++) {
+            c[i][0] = 0;
+        }
+        for (int j = 0; j <= n; j++) {
+            c[0][j] = 0;
+        }
+
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (x.charAt(i - 1) == y.charAt(j - 1)) {
+                    c[i][j] = c[i - 1][j - 1] + 1;
+                } else {
+                    c[i][j] = Math.max(c[i - 1][j], c[i][j - 1]);
+                }
+            }
+        }
+    }
+
+    // Function to print LCS
+    public static void printLCS(String x, String y, int i, int j) {
+        if (i == 0 || j == 0)
+            return;
+
+        if (x.charAt(i - 1) == y.charAt(j - 1)) {
+            printLCS(x, y, i - 1, j - 1);
+            System.out.print(x.charAt(i - 1));
+        } else if (c[i - 1][j] > c[i][j - 1]) {
+            printLCS(x, y, i - 1, j);
+        } else {
+            printLCS(x, y, i, j - 1);
+        }
+    }
+
+    // Print DP table
+    public static void printTable(String x, String y) {
+        System.out.println("\nLCS Table:");
+        for (int i = 0; i <= x.length(); i++) {
+            for (int j = 0; j <= y.length(); j++) {
+                System.out.print(c[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter first string: ");
+        String x = sc.nextLine();
+
+        System.out.print("Enter second string: ");
+        String y = sc.nextLine();
+
+        findLCS(x, y);
+
+        printTable(x, y);
+
+        System.out.print("\nLCS: ");
+        printLCS(x, y, x.length(), y.length());
+
+        System.out.println("\nLCS Length: " + c[x.length()][y.length()]);
+
+        sc.close();
+    }
+}

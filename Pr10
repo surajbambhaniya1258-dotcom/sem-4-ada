@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class Knapsack {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of items: ");
+        int n = sc.nextInt();
+
+        int value[] = new int[n];
+        int weight[] = new int[n];
+
+        System.out.println("Enter values of items:");
+        for (int i = 0; i < n; i++) {
+            value[i] = sc.nextInt();
+        }
+
+        System.out.println("Enter weights of items:");
+        for (int i = 0; i < n; i++) {
+            weight[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter maximum capacity: ");
+        int W = sc.nextInt();
+
+        int dp[][] = new int[n + 1][W + 1];
+
+        // Build DP table
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= W; j++) {
+
+                if (i == 0 || j == 0) {
+                    dp[i][j] = 0;
+                } else if (weight[i - 1] <= j) {
+                    dp[i][j] = Math.max(
+                            value[i - 1] + dp[i - 1][j - weight[i - 1]],
+                            dp[i - 1][j]
+                    );
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+
+        System.out.println("Maximum value: " + dp[n][W]);
+
+        // Find selected items
+        System.out.println("Selected items:");
+        int i = n, j = W;
+
+        while (i > 0 && j > 0) {
+            if (dp[i][j] != dp[i - 1][j]) {
+                System.out.println("Item " + i + " selected");
+                j -= weight[i - 1];
+            }
+            i--;
+        }
+
+        sc.close();
+    }
+}

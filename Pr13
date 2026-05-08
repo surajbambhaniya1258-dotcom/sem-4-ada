@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+public class SCS {
+
+    // Build DP table
+    public static int[][] findSCS(String x, String y) {
+        int m = x.length();
+        int n = y.length();
+
+        int dp[][] = new int[m + 1][n + 1];
+
+        // Base cases
+        for (int i = 0; i <= m; i++) dp[i][0] = i;
+        for (int j = 0; j <= n; j++) dp[0][j] = j;
+
+        // Fill DP table
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (x.charAt(i - 1) == y.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = 1 + Math.min(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp;
+    }
+
+    // Build SCS string
+    public static String buildSCS(String x, String y, int dp[][]) {
+        int i = x.length();
+        int j = y.length();
+
+        StringBuilder scs = new StringBuilder();
+
+        while (i > 0 && j > 0) {
+            if (x.charAt(i - 1) == y.charAt(j - 1)) {
+                scs.append(x.charAt(i - 1));
+                i--;
+                j--;
+            } else if (dp[i - 1][j] < dp[i][j - 1]) {
+                scs.append(x.charAt(i - 1));
+                i--;
+            } else {
+                scs.append(y.charAt(j - 1));
+                j--;
+            }
+        }
+
+        while (i > 0) {
+            scs.append(x.charAt(i - 1));
+            i--;
+        }
+
+        while (j > 0) {
+            scs.append(y.charAt(j - 1));
+            j--;
+        }
+
+        return scs.reverse().toString();
+    }
+
+    // Print DP table
+    public static void printTable(int dp[][], String x, String y) {
+        System.out.println("\nSCS Table:");
+        for (int i = 0; i <= x.length(); i++) {
+            for (int j = 0; j <= y.length(); j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter first string: ");
+        String x = sc.nextLine();
+
+        System.out.print("Enter second string: ");
+        String y = sc.nextLine();
+
+        int dp[][] = findSCS(x, y);
+
+        printTable(dp, x, y);
+
+        String scs = buildSCS(x, y, dp);
+
+        System.out.println("\nSCS String: " + scs);
+        System.out.println("SCS Length: " + dp[x.length()][y.length()]);
+
+        sc.close();
+    }
+}

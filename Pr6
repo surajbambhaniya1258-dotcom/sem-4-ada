@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+public class Search {
+
+    // Linear Search
+    static int linear(int arr[], int k) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == k) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // Binary Search (array must be sorted)
+    static int binary(int arr[], int k) {
+        int l = 0, r = arr.length - 1;
+
+        while (l <= r) {
+            int m = (l + r) / 2;
+
+            if (arr[m] == k) {
+                return m;
+            } else if (arr[m] < k) {
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter size: ");
+        int n = sc.nextInt();
+
+        int arr[] = new int[n];
+
+        System.out.println("Enter elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter element to search: ");
+        int key = sc.nextInt();
+
+        System.out.println("Choose method: 1. Linear  2. Binary");
+        int choice = sc.nextInt();
+
+        int ans;
+
+        if (choice == 1) {
+            ans = linear(arr, key);
+        } else {
+            ans = binary(arr, key);
+        }
+
+        if (ans == -1) {
+            System.out.println("Not Found");
+        } else {
+            System.out.println("Found at index: " + ans);
+        }
+
+        sc.close();
+    }
+}
